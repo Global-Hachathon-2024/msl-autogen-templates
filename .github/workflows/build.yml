@@ -5,6 +5,10 @@ on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      actions: write
+      checks: write
+      contents: write
 
     steps:
     - name: Checkout repository
@@ -15,6 +19,18 @@ jobs:
       with:
         bicepFilePath: 'main.bicep'
         outputFilePath: 'main.json'
+    
+    - name: Test action output
+        shell: bash
+        run: |
+          FILE="./main.json"
+          if test -f "$FILE"; then
+            echo "$FILE created successfully"
+          else
+            echo "$FILE not found."
+            exit 1
+          fi
+    
     - name: Commit ARM template
       run: |
         git config --global user.name 'github-actions[bot]'
