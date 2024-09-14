@@ -1,14 +1,13 @@
 name: Build Bicep to ARM Template
-
+permissions:
+      actions: write
+      checks: write
+      contents: write
 on: [push]
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    permissions:
-      actions: write
-      checks: write
-      contents: write
 
     steps:
     - name: Checkout repository
