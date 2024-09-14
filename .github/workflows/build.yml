@@ -20,15 +20,15 @@ jobs:
         outputFilePath: 'main.json'
     
     - name: Test action output
-        shell: bash
-        run: |
-          FILE="./main.json"
-          if test -f "$FILE"; then
-            echo "$FILE created successfully"
-          else
-            echo "$FILE not found."
-            exit 1
-          fi
+      shell: bash
+      run: |
+        FILE="./main.json"
+        if test -f "$FILE"; then
+          echo "$FILE created successfully"
+        else
+          echo "$FILE not found."
+          exit 1
+        fi
     
     - name: Commit ARM template
       run: |
