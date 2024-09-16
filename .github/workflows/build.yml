@@ -26,7 +26,7 @@ jobs:
     - name: Find and build Bicep files
       shell: bash
       run: |
-        bicepFile=$(echo '${{ steps.changed-files.outputs.all_changed_files }}
+        bicepFile=$(echo '${{ steps.changed-files.outputs.all_changed_files }}')
         dirPath=$(dirname "$bicepFile")
         outputFile=$(echo "$dirPath/main.json")
         az bicep build --file "$bicepFile" --outfile "$outputFile"
