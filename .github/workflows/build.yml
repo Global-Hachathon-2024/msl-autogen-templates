@@ -16,15 +16,11 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Find and build Bicep files
-      shell: bash
+    - name: Get main.bicep path
+      id: get_bicep_path
       run: |
-        find . -name 'main.bicep' | while read bicepFile; do
-          dir=$(dirname "$bicepFile")
-          outputFile="$dir/main.json"
-          echo "Building $bicepFile to $outputFile"
-          az bicep build --file "$bicepFile" --outfile "$outputFile"
-        done
+        FILE_PATH=$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }} | grep 'main.bicep')
+        echo "BICEP_PATH=$FILE_PATH" >> $GITHUB_ENV
     
     - name: Test action output
       shell: bash
