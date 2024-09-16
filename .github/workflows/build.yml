@@ -3,7 +3,10 @@ permissions:
       actions: write
       checks: write
       contents: write
-on: [push]
+on: 
+  push:
+    paths:
+      - '**/main.bicep'
 
 jobs:
   build:
@@ -13,11 +16,15 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Build Bicep file
-      uses: Azure/bicep-build-action@v1.0.0
-      with:
-        bicepFilePath: 'main.bicep'
-        outputFilePath: 'main.json'
+    - name: Find and build Bicep files
+      shell: bash
+      run: |
+        find . -name 'main.bicep' | while read bicepFile; do
+          dir=$(dirname "$bicepFile")
+          outputFile="$dir/main.json"
+          echo "Building $bicepFile to $outputFile"
+          az bicep build --file "$bicepFile" --outfile "$outputFile"
+        done
     
     - name: Test action output
       shell: bash
