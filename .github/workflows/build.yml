@@ -16,23 +16,21 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Get main.bicep path
-      id: get_bicep_path
-      run: |
-        FILE_PATH=$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }} | grep 'main.bicep')
-        echo "BICEP_PATH=$FILE_PATH" >> $GITHUB_ENV
-    
-    - name: Test action output
+    - name: Get changed files
+      id: changed-files
+      uses: tj-actions/changed-files@v45
+      with:
+        files: |
+          main.bicep
+
+    - name: Find and build Bicep files
       shell: bash
       run: |
-        FILE="./main.json"
-        if test -f "$FILE"; then
-          echo "$FILE created successfully"
-        else
-          echo "$FILE not found."
-          exit 1
-        fi
-    
+        bicepFile=$(echo '${{ steps.changed-files.outputs.all_changed_files }}
+        dirPath=$(dirname "$bicepFile")
+        outputFile=$(echo "$dirPath/main.json")
+        az bicep build --file "$bicepFile" --outfile "$outputFile"
+
     - name: Commit ARM template
       run: |
         git config --global user.name 'github-actions[bot]'
