@@ -32,7 +32,7 @@ jobs:
           main.bicep
 
     - name: List changed files
-      if: contains(steps.changed-files.outputs.modified_files, 'main.bicep')
+      # if: contains(steps.changed-files.outputs.modified_files, 'main.bicep')
       env:
         ADDED_FILES: ${{ steps.changed-files.outputs.added_files }}
       run: |
