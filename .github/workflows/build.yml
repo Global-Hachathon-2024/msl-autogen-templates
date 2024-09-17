@@ -32,10 +32,11 @@ jobs:
           main.bicep
 
     - name: List changed files
+      if: contains(steps.changed-files.outputs.modified_files, 'main.bicep')
+      env:
+        ADDED_FILES: ${{ steps.changed-files.outputs.added_files }}
       run: |
-        for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
-          echo "${file} was changed"
-        done
+        echo ${ADDED_FILES[0]}
 
     # - name: Commit ARM template
     #   run: |
