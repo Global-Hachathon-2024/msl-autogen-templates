@@ -27,12 +27,17 @@ jobs:
     - name: Run changed-files with dir_names
       id: changed-files-dir-names
       uses: tj-actions/changed-files@v45
-      with:
-        dir_names: "true"
+      # with:
+      #   dir_names: "true"
 
     - name: Display changed directories
       run: |
-        echo "Changed directories: ${{ steps.changed-files-dir-names.outputs.all_changed_files }}"
+        bicepPath="${{ steps.changed-files-dir-names.outputs.all_changed_files }}"
+        dirPath=$(dirname "$bicepFile")
+        echo $bicepPath
+        echo $dirPath
+        echo "BICEP_PATH=$bicepPath" >> $GITHUB_ENV
+        echo "DIR_PATH=$dirPath" >> $GITHUB_ENV
 
     # - name: Commit ARM template
     #   run: |
