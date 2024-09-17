@@ -16,14 +16,6 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    # - name: Get main.bicep path
-    #   id: get_bicep_path
-    #   run: |
-    #     bicepFile=$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }} | grep 'main.bicep')
-    #     dirPath=$(dirname "$bicepFile")
-    #     echo "armtFile=$dirPath" >> $GITHUB_ENV
-    #     az bicep build --file "$bicepFile" --out "$armtFile"
-
     - name: Run changed-files with dir_names
       id: changed-files-dir-names
       uses: tj-actions/changed-files@v45
@@ -41,7 +33,7 @@ jobs:
         armtPath="${{ env.DIR_PATH }}/main.json"
         echo $armtPath
         echo "ARMT_PATH=$armtPath" >> $GITHUB_ENV
-        az bicep build --file "${bicepPath}" --out "${armtPath}"
+        az bicep build --file "${bicepPath}" --outfile "${armtPath}"
 
     - name: Commit ARM template
       run: |
