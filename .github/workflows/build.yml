@@ -32,7 +32,7 @@ jobs:
 
     - name: Display changed directories
       run: |
-        echo "Changed directories: ${{ steps.changed-files-dir-names.outputs.changed_files }}"
+        echo "Changed directories: ${{ steps.changed-files-dir-names.outputs.all_changed_files }}"
 
     # - name: Commit ARM template
     #   run: |
