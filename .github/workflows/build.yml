@@ -24,19 +24,14 @@ jobs:
     #     echo "armtFile=$dirPath" >> $GITHUB_ENV
     #     az bicep build --file "$bicepFile" --out "$armtFile"
 
-    - name: Get changed files
-      id: changed-files
+    - name: Run changed-files with dir_names
+      id: changed-files-dir-names
       uses: tj-actions/changed-files@v45
       with:
-        files: |
-          main.bicep
+        dir_names: "true"
 
-    - name: List changed files
-      # if: contains(steps.changed-files.outputs.modified_files, 'main.bicep')
-      env:
-        ADDED_FILES: ${{ steps.changed-files.outputs.added_files }}
-      run: |
-        echo ${ADDED_FILES[0]}
+    - name: Display changed directories
+        run: echo "Changed directories: ${{ steps.changed-files-dir-names.outputs.changed_files }}"
 
     # - name: Commit ARM template
     #   run: |
