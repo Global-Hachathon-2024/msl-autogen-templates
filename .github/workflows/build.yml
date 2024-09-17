@@ -28,19 +28,25 @@ jobs:
       id: changed-files-dir-names
       uses: tj-actions/changed-files@v45
 
-    - name: Display changed directories
+    - name: Find filepath to main.bicep
       run: |
         bicepPath="${{ steps.changed-files-dir-names.outputs.all_changed_files }}"
         dirPath="${bicepPath%/main.bicep}"
-        echo $bicepPath
-        echo $dirPath
+        echo "found ${bicepPath}"
         echo "BICEP_PATH=$bicepPath" >> $GITHUB_ENV
         echo "DIR_PATH=$dirPath" >> $GITHUB_ENV
+    
+    - name: Build ARM template
+      run: |
+        armtPath="${{ env.DIR_PATH }}/main.json"
+        echo $armtPath
+        echo "ARMT_PATH=$armtPath" >> $GITHUB_ENV
+        az bicep build --file "${bicepPath}" --out "${armtPath}"
 
-    # - name: Commit ARM template
-    #   run: |
-    #     git config --global user.name 'github-actions[bot]'
-    #     git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-    #     git add "$armtFile"
-    #     git commit -m 'Add ARM template'
-    #     git push
+    - name: Commit ARM template
+      run: |
+        git config --global user.name 'github-actions[bot]'
+        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+        git add "${{ env.ARMT_PATH }}"
+        git commit -m 'Add ARM template'
+        git push
