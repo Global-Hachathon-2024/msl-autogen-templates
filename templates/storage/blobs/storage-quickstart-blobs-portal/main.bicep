@@ -1,3 +1,4 @@
+// test
 @description('The name of the Azure Function App')
 param functionAppName string = 'func-${uniqueString(resourceGroup().id)}'
 
