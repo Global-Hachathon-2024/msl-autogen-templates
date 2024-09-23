@@ -7,9 +7,6 @@
     },
     "location": {
       "value": "eastus"
-    },
-    "storageAccountSkuName": {
-      "value": "Standard_LRS"
     }
   }
 }
