@@ -1,14 +1,17 @@
-@description('The name of the storage account')
-param storageAccountName string = 'storage${uniqueString(resourceGroup().id)}'
+@description('The name of the Storage Account')
+param storageAccountName string = 'st${uniqueString(resourceGroup().id)}'
 
-@description('The location of the storage account')
+@description('The location of the Storage Account')
 param location string = resourceGroup().location
+
+@description('The SKU of the Storage Account')
+param storageAccountSkuName string = 'Standard_LRS'
 
 resource storageAccount 'Microsoft.Storage/storageAccounts@2022-09-01' = {
   name: storageAccountName
   location: location
   sku: {
-    name: 'Standard_LRS'
+    name: storageAccountSkuName
   }
   kind: 'StorageV2'
   properties: {
