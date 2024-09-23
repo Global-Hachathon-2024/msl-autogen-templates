@@ -3,10 +3,13 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "storageAccountName": {
-      "value": "storagequickstart${uniqueString(resourceGroup().id)}"
+      "value": "st${uniqueString(resourceGroup().id)}"
     },
     "location": {
       "value": "eastus"
+    },
+    "storageAccountSkuName": {
+      "value": "Standard_LRS"
     }
   }
 }
