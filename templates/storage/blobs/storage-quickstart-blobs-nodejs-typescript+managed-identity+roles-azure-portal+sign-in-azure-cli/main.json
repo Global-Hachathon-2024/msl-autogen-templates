@@ -5,22 +5,29 @@
     "_generator": {
       "name": "bicep",
       "version": "0.29.47.4906",
-      "templateHash": "18433402372991742488"
+      "templateHash": "2328269435058431940"
     }
   },
   "parameters": {
     "storageAccountName": {
       "type": "string",
-      "defaultValue": "[format('storage{0}', uniqueString(resourceGroup().id))]",
+      "defaultValue": "[format('st{0}', uniqueString(resourceGroup().id))]",
       "metadata": {
-        "description": "The name of the storage account"
+        "description": "The name of the Storage Account"
       }
     },
     "location": {
       "type": "string",
       "defaultValue": "[resourceGroup().location]",
       "metadata": {
-        "description": "The location of the storage account"
+        "description": "The location of the Storage Account"
+      }
+    },
+    "storageAccountSkuName": {
+      "type": "string",
+      "defaultValue": "Standard_LRS",
+      "metadata": {
+        "description": "The SKU of the Storage Account"
       }
     }
   },
@@ -31,7 +38,7 @@
       "name": "[parameters('storageAccountName')]",
       "location": "[parameters('location')]",
       "sku": {
-        "name": "Standard_LRS"
+        "name": "[parameters('storageAccountSkuName')]"
       },
       "kind": "StorageV2",
       "properties": {
