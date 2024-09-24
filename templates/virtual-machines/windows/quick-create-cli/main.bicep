@@ -13,8 +13,8 @@ param adminUsername string = 'azureuser'
 @description('The admin password for the virtual machine')
 param adminPassword string
 
-resource vmPublicIp 'Microsoft.Network/publicIPAddresses@2021-02-01' = {
-  name: '${vmName}-publicIp'
+resource vmPublicIP 'Microsoft.Network/publicIPAddresses@2021-02-01' = {
+  name: '${vmName}-publicIP'
   location: location
   sku: {
     name: 'Standard'
@@ -57,7 +57,7 @@ resource vmNic 'Microsoft.Network/networkInterfaces@2021-02-01' = {
           }
           privateIPAllocationMethod: 'Dynamic'
           publicIPAddress: {
-            id: vmPublicIp.id
+            id: vmPublicIP.id
           }
         }
       }
@@ -130,8 +130,7 @@ resource nsgAssociation 'Microsoft.Network/networkInterfaces/networkSecurityGrou
 }
 
 resource installIIS 'Microsoft.Compute/virtualMachines/runCommands@2021-07-01' = {
-  name: 'InstallIIS'
-  parent: vm
+  name: '${vmName}/InstallIIS'
   properties: {
     asyncExecution: false
     source: {
@@ -140,4 +139,4 @@ resource installIIS 'Microsoft.Compute/virtualMachines/runCommands@2021-07-01' =
   }
 }
 
-output publicIpAddress string = vmPublicIp.properties.ipAddress
+output publicIpAddress string = vmPublicIP.properties.ipAddress
