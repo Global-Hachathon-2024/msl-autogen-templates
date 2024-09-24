@@ -1,5 +1,5 @@
 @description('The name of the resource group')
-param resourceGroupName string
+param resourceGroupName string = 'myResourceGroupCLI'
 
 @description('The location of the resource group')
 param location string = 'westus3'
@@ -126,16 +126,6 @@ resource nsgAssociation 'Microsoft.Network/networkInterfaces/networkSecurityGrou
   properties: {
     networkSecurityGroup: {
       id: openPort80.id
-    }
-  }
-}
-
-resource installIIS 'Microsoft.Compute/virtualMachines/runCommands@2021-07-01' = {
-  name: '${vmName}/InstallIIS'
-  properties: {
-    asyncExecution: false
-    source: {
-      script: 'Install-WindowsFeature -name Web-Server -IncludeManagementTools'
     }
   }
 }
