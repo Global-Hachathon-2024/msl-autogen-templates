@@ -2,8 +2,20 @@
   "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
+    "resourceGroupName": {
+      "value": "myResourceGroupCLI"
+    },
+    "location": {
+      "value": "westus3"
+    },
+    "vmName": {
+      "value": "myVM"
+    },
+    "adminUsername": {
+      "value": "azureuser"
+    },
     "adminPassword": {
-      "value": "YourSecurePassword123!"
+      "value": "P@ssw0rd1234!"  // Replace with a secure password
     }
   }
 }
