@@ -1,0 +1,75 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "metadata": {
+    "_generator": {
+      "name": "bicep",
+      "version": "0.29.47.4906",
+      "templateHash": "14070355331822868386"
+    }
+  },
+  "parameters": {
+    "redisCacheName": {
+      "type": "string",
+      "defaultValue": "[format('redis-{0}', uniqueString(resourceGroup().id))]",
+      "metadata": {
+        "description": "The name of the Azure Cache for Redis instance."
+      }
+    },
+    "location": {
+      "type": "string",
+      "defaultValue": "[resourceGroup().location]",
+      "metadata": {
+        "description": "The location of the Azure Cache for Redis instance."
+      }
+    },
+    "skuName": {
+      "type": "string",
+      "defaultValue": "Standard",
+      "metadata": {
+        "description": "The SKU of the Azure Cache for Redis instance."
+      }
+    },
+    "skuFamily": {
+      "type": "string",
+      "defaultValue": "C",
+      "metadata": {
+        "description": "The size of the Azure Cache for Redis instance."
+      }
+    },
+    "skuCapacity": {
+      "type": "int",
+      "defaultValue": 1,
+      "metadata": {
+        "description": "The capacity of the Azure Cache for Redis instance."
+      }
+    }
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Cache/redis",
+      "apiVersion": "2023-08-01",
+      "name": "[parameters('redisCacheName')]",
+      "location": "[parameters('location')]",
+      "sku": {
+        "name": "[parameters('skuName')]",
+        "family": "[parameters('skuFamily')]",
+        "capacity": "[parameters('skuCapacity')]"
+      },
+      "properties": {
+        "enableNonSslPort": false,
+        "minimumTlsVersion": "1.2"
+      }
+    }
+  ],
+  "outputs": {
+    "redisHostName": {
+      "type": "string",
+      "value": "[reference(resourceId('Microsoft.Cache/redis', parameters('redisCacheName')), '2023-08-01').hostName]"
+    },
+    "redisPrimaryKey": {
+      "type": "string",
+      "value": "[listKeys(resourceId('Microsoft.Cache/redis', parameters('redisCacheName')), '2023-08-01').primaryKey]"
+    }
+  }
+}
