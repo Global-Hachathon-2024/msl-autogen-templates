@@ -15,7 +15,7 @@
       "value": "azureuser"
     },
     "adminPassword": {
-      "value": "P@ssw0rd1234!"  // Replace with a secure password
+      "value": "P@ssw0rd1234!"  // Ensure this meets your security requirements
     }
   }
 }
