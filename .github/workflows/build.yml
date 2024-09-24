@@ -10,12 +10,18 @@ on:
 
 jobs:
   build:
-    if: github.actor == 'github-actions[bot]@users.noreply.github.com'
     runs-on: ubuntu-latest
 
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
+
+    - name: Get commit author
+      run: echo "AUTHOR=$(git log -1 --pretty=format:'%an')" >> $GITHUB_ENV
+
+    - name: Stop workflow if the author is not github-bot
+      if: env.AUTHOR == 'github-actions[bot]'
+      run: exit 1
 
     - name: Run changed-files with dir_names
       id: changed-files-dir-names
