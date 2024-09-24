@@ -1,5 +1,5 @@
 @description('The name of the resource group')
-param resourceGroupName string = 'myResourceGroupCLI'
+param resourceGroupName string
 
 @description('The location of the resource group')
 param location string = 'westus3'
@@ -11,11 +11,10 @@ param vmName string = 'myVM'
 param adminUsername string = 'azureuser'
 
 @description('The admin password for the virtual machine')
-@secure()
 param adminPassword string
 
-resource vmPublicIP 'Microsoft.Network/publicIPAddresses@2021-02-01' = {
-  name: '${vmName}-publicIP'
+resource vmPublicIp 'Microsoft.Network/publicIPAddresses@2021-02-01' = {
+  name: '${vmName}-publicIp'
   location: location
   sku: {
     name: 'Standard'
@@ -58,7 +57,7 @@ resource vmNic 'Microsoft.Network/networkInterfaces@2021-02-01' = {
           }
           privateIPAllocationMethod: 'Dynamic'
           publicIPAddress: {
-            id: vmPublicIP.id
+            id: vmPublicIp.id
           }
         }
       }
@@ -130,4 +129,15 @@ resource nsgAssociation 'Microsoft.Network/networkInterfaces/networkSecurityGrou
   }
 }
 
-output publicIpAddress string = vmPublicIP.properties.ipAddress
+resource installIIS 'Microsoft.Compute/virtualMachines/runCommands@2021-07-01' = {
+  name: 'InstallIIS'
+  parent: vm
+  properties: {
+    asyncExecution: false
+    source: {
+      script: 'Install-WindowsFeature -name Web-Server -IncludeManagementTools'
+    }
+  }
+}
+
+output publicIpAddress string = vmPublicIp.properties.ipAddress
