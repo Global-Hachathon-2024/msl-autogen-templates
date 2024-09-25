@@ -5,36 +5,36 @@
     "_generator": {
       "name": "bicep",
       "version": "0.29.47.4906",
-      "templateHash": "16766090578516590383"
+      "templateHash": "17679886684932917550"
     }
   },
   "parameters": {
     "appServicePlanName": {
       "type": "string",
-      "defaultValue": "[format('asp-{0}', uniqueString(resourceGroup().id))]",
+      "defaultValue": "[format('appServicePlan-{0}', uniqueString(resourceGroup().id))]",
       "metadata": {
-        "description": "The name of the App Service plan"
+        "description": "The name of the Azure App Service plan."
       }
     },
     "webAppName": {
       "type": "string",
       "defaultValue": "[format('webapp-{0}', uniqueString(resourceGroup().id))]",
       "metadata": {
-        "description": "The name of the Web App"
+        "description": "The name of the web app."
       }
     },
     "location": {
       "type": "string",
       "defaultValue": "[resourceGroup().location]",
       "metadata": {
-        "description": "The location of the resources"
+        "description": "The location of the resources."
       }
     },
     "skuName": {
       "type": "string",
       "defaultValue": "B1",
       "metadata": {
-        "description": "The SKU of the App Service plan"
+        "description": "The SKU of the App Service plan."
       }
     }
   },
