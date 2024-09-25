@@ -3,7 +3,7 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "appServicePlanName": {
-      "value": "asp-unique"
+      "value": "appServicePlan-unique"
     },
     "webAppName": {
       "value": "webapp-unique"
