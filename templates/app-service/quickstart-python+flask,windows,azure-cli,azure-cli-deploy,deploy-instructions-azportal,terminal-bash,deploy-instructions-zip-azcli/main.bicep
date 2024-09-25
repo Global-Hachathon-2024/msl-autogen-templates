@@ -1,13 +1,13 @@
-@description('The name of the App Service plan')
-param appServicePlanName string = 'asp-${uniqueString(resourceGroup().id)}'
+@description('The name of the Azure App Service plan.')
+param appServicePlanName string = 'appServicePlan-${uniqueString(resourceGroup().id)}'
 
-@description('The name of the Web App')
+@description('The name of the web app.')
 param webAppName string = 'webapp-${uniqueString(resourceGroup().id)}'
 
-@description('The location of the resources')
+@description('The location of the resources.')
 param location string = resourceGroup().location
 
-@description('The SKU of the App Service plan')
+@description('The SKU of the App Service plan.')
 param skuName string = 'B1'
 
 resource appServicePlan 'Microsoft.Web/serverfarms@2021-02-01' = {
